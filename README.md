@@ -31,32 +31,40 @@
 ### 从源码运行
 
 ```bash
+# 1. 克隆项目
+git clone https://github.com/uestyhox1/travel-planner.git
+cd travel-planner
+
+# 2. 安装 Python 依赖
 pip install -r requirements.txt
+
+# 3. 一键安装 OCR 引擎
+python setup_ocr.py
+
+# 4. 启动
 python app.py           # 原生桌面窗口模式
 python app.py --browser # 浏览器模式 (http://127.0.0.1:5000)
 ```
 
-### OCR 识别（开箱即用）
+### OCR 识别
 
-项目已内置便携版 Tesseract OCR（`tesseract/` 文件夹），支持中英文混合识别，**无需额外安装**：
+项目通过便携版 Tesseract OCR 支持中英文混合识别。
 
 ```bash
-# 开发时直接使用（自动检测项目根目录的 tesseract/）
-python app.py
+# 一键安装（自动检测/下载/配置）
+python setup_ocr.py
 
-# 部署时放在 exe 同级目录
-dist/
-├── TravelPlanner.exe
-└── tesseract/
-    ├── tesseract.exe
-    ├── *.dll
-    └── tessdata/
-        ├── eng.traineddata
-        └── chi_sim.traineddata    # 中文简体语言包
+# 检查状态
+python setup_ocr.py --check
 ```
 
+`setup_ocr.py` 会自动：
+1. 查找系统中已安装的 Tesseract 并复制为便携版
+2. 如果没装过，尝试通过 `winget` 自动安装
+3. 下载中英文语言包（eng + chi_sim）
+
 OCR 引擎自动检测路径优先级：
-1. exe/源码 同级的 `tesseract/` 文件夹（便携版）
+1. 项目根目录的 `tesseract/` 文件夹（便携版，`setup_ocr.py` 创建）
 2. 用户安装版 `%LOCALAPPDATA%\Tesseract-OCR\`
 3. 系统安装版 `C:\Program Files\Tesseract-OCR\`
 
@@ -159,6 +167,7 @@ AI提取景点 → 关联小红书攻略 → 添加待办事项
 ├── xiaohongshu.py            # 小红书服务（30+景点内置数据+真实搜索URL）
 ├── pdf_export.py             # PDF生成器（ReportLab+中文字体）
 ├── config_manager.py         # 配置管理（API Key/模型/偏好）
+├── setup_ocr.py              # OCR一键安装脚本
 │
 ├── templates/
 │   └── index.html            # 前端单页面（6个视图+登录注册页）

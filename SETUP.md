@@ -52,33 +52,30 @@
 
 ## 给开发者：从源码运行
 
-### 1. 装依赖
+### 1. 克隆项目
 
 ```bash
-# 克隆项目
-git clone https://github.com/uestyhox1/旅行攻略.git
-cd 旅行攻略
+git clone https://github.com/uestyhox1/travel-planner.git
+cd travel-planner
+```
 
+### 2. 安装依赖 & OCR（一键搞定）
+
+```bash
 # 安装 Python 依赖（需要 Python 3.10+）
 pip install -r requirements.txt
+
+# 一键安装 OCR 引擎（自动检测、下载、配置）
+python setup_ocr.py
 ```
 
-### 2. 配置 OCR（二选一）
+`setup_ocr.py` 会自动：
+1. 检查是否已有便携版 Tesseract
+2. 查找系统中已安装的 Tesseract
+3. 都没找到就通过 `winget` 自动安装
+4. 下载中英文语言包（eng + chi_sim）
 
-**方案 A：复制便携版（推荐）**
-
-如果你有另一台已经配好的电脑，直接把 `tesseract/` 文件夹复制到项目根目录即可。
-
-**方案 B：安装系统版 Tesseract**
-
-```bash
-# 安装 Tesseract
-winget install UB-Mannheim.TesseractOCR
-
-# 下载中文语言包
-# 访问 https://github.com/tesseract-ocr/tessdata_fast/raw/main/chi_sim.traineddata
-# 放入 C:\Program Files\Tesseract-OCR\tessdata\
-```
+> 不想用 OCR？跳过 `setup_ocr.py` 即可，手动输入文字不受影响。
 
 ### 3. 启动
 
