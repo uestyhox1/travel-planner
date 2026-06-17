@@ -20,13 +20,14 @@
 ### 直接运行（无需安装任何东西）
 
 ```bash
-1. 下载整个 dist/ 文件夹
-2. 双击 TravelPlanner.exe → 原生桌面窗口打开
-3. 注册并登录
-4. 上传攻略图片，OCR 开箱即用
+1. 下载整个文件夹
+2. 点击build_exe.bat自动注册运行
+3. 双击 TravelPlanner.exe → 原生桌面窗口打开
+4. 注册并登录
+5. 上传攻略图片，开箱即用
 ```
 
-**OCR 已内置，无需额外安装！** 便携版 Tesseract 已打包在 `dist/tesseract/` 中，支持中英文识别。
+**OCR 已内置，无需额外安装！** 便携版 Tesseract 已打包在 `/tesseract/` 中，支持中英文识别。
 
 ### 从源码运行
 
