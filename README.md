@@ -20,11 +20,13 @@
 ### 直接运行（无需安装任何东西）
 
 ```bash
-1. 下载 dist/TravelPlanner.exe （20MB，单文件）
-2. 双击运行 → 原生桌面窗口打开
+1. 下载整个 dist/ 文件夹
+2. 双击 TravelPlanner.exe → 原生桌面窗口打开
 3. 登录（默认管理员账户: admin / admin）
-4. 开始使用
+4. 上传攻略图片，OCR 开箱即用
 ```
+
+**OCR 已内置，无需额外安装！** 便携版 Tesseract 已打包在 `dist/tesseract/` 中，支持中英文识别。
 
 ### 从源码运行
 
@@ -34,18 +36,31 @@ python app.py           # 原生桌面窗口模式
 python app.py --browser # 浏览器模式 (http://127.0.0.1:5000)
 ```
 
-### OCR 安装（可选）
+### OCR 识别（开箱即用）
 
-图片文字识别需要 Tesseract OCR，不安装也能正常使用（手动输入文字即可）：
+项目已内置便携版 Tesseract OCR（`tesseract/` 文件夹），支持中英文混合识别，**无需额外安装**：
 
 ```bash
-# 方式A: 安装官方版
-winget install UB-Mannheim.TesseractOCR
-# 安装后需下载中文语言包 chi_sim.traineddata 放入 tessdata 目录
+# 开发时直接使用（自动检测项目根目录的 tesseract/）
+python app.py
 
-# 方式B: 便携版（推荐，随项目迁移）
-将 tesseract.exe 和 tessdata/chi_sim.traineddata 放入项目的 tesseract/ 文件夹
+# 部署时放在 exe 同级目录
+dist/
+├── TravelPlanner.exe
+└── tesseract/
+    ├── tesseract.exe
+    ├── *.dll
+    └── tessdata/
+        ├── eng.traineddata
+        └── chi_sim.traineddata    # 中文简体语言包
 ```
+
+OCR 引擎自动检测路径优先级：
+1. exe/源码 同级的 `tesseract/` 文件夹（便携版）
+2. 用户安装版 `%LOCALAPPDATA%\Tesseract-OCR\`
+3. 系统安装版 `C:\Program Files\Tesseract-OCR\`
+
+如果所有引擎都不可用，仍可手动输入文字，不影响其他功能。
 
 ### AI 配置
 
@@ -437,10 +452,13 @@ App
 
 ```bash
 # 在源电脑
-复制整个 旅行攻略/ 文件夹 → U盘/网络传输
+构建项目: build_exe.bat  →  生成 dist/ 文件夹（含 exe + OCR）
+
+# 复制到目标电脑
+将整个 dist/ 文件夹复制到任意位置
 
 # 在目标电脑
-粘贴到任意位置 → 双击 TravelPlanner.exe → 开始使用
+双击 TravelPlanner.exe → 开始使用（OCR 直接可用）
 ```
 
 ### 数据携带
@@ -452,20 +470,21 @@ App
 | 上传图片 | `data/uploads/` | 图片文件 |
 | 偏好设置 | 浏览器 localStorage | 主题/默认页等（需重新设置） |
 
-### Tesseract 便携部署
+### Tesseract 便携部署（已内置）
 
 ```bash
-# 目标电脑如需OCR功能，任选一种:
-# 方案A: 放入便携版（推荐，随项目迁移）
-旅行攻略/
-└── tesseract/
-    ├── tesseract.exe
-    └── tessdata/
-        └── chi_sim.traineddata   # 中文语言包
+# OCR 引擎已内置在项目中，构建时自动复制：
+build_exe.bat  →  dist/
+                    ├── TravelPlanner.exe
+                    └── tesseract/         # 自动复制
+                        ├── tesseract.exe
+                        ├── *.dll
+                        └── tessdata/
+                            ├── eng.traineddata
+                            └── chi_sim.traineddata
 
-# 方案B: 安装官方版
-winget install UB-Mannheim.TesseractOCR
-# 再下载 chi_sim.traineddata 放入 tessdata 目录
+# 如需单独更新 Tesseract:
+#   替换 tesseract/ 文件夹中的文件即可
 ```
 
 ---

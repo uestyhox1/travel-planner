@@ -42,18 +42,29 @@ pyinstaller --onefile ^
 
 echo.
 if exist "dist\TravelPlanner.exe" (
-    echo [2/2] Build successful!
-    echo.
-    echo Output: dist\TravelPlanner.exe (15MB)
+    echo [2/3] Build successful!
+    echo [3/3] Copying portable Tesseract OCR...
+    if exist "tesseract" (
+        robocopy "tesseract" "dist\tesseract" /E /NFL /NDL /NJH /NJS /nc /ns /np 2>nul
+        echo.
+    ) else (
+        echo   WARNING: tesseract/ folder not found - OCR will need manual setup
+        echo   Run: python setup_tesseract.py
+        echo.
+    )
+    echo ========================================
+    echo   Build Complete!
     echo ========================================
     echo.
-    echo To use:
-    echo   1. Double-click TravelPlanner.exe
-    echo   2. Browser will open automatically
-    echo   3. Upload travel guide images or paste text
+    echo Output folder: dist\
+    echo   - TravelPlanner.exe  (20MB, standalone app)
+    if exist "dist\tesseract" echo   - tesseract/         (portable OCR, Chinese+English)
     echo.
-    echo Note: Place TravelPlanner.exe anywhere,
-    echo       data will be stored alongside it.
+    echo To deploy to another computer:
+    echo   1. Copy the entire "dist" folder
+    echo   2. Double-click TravelPlanner.exe
+    echo   3. OCR works out of the box - no installation needed!
+    echo.
 ) else (
     echo [2/2] Build failed. Check errors above.
 )
