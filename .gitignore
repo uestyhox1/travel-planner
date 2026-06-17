@@ -1,0 +1,33 @@
+# Build artifacts
+build/
+dist/
+__pycache__/
+*.pyc
+*.spec
+*.pyo
+
+# Runtime data (contains user data + API keys)
+data/
+
+# Temp files
+*.temp.png
+*.preprocessed.png
+captcha_test.png
+*_导出测试.pdf
+test_export.pdf
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Environment
+.env
+*.egg-info/
+~/.EasyOCR/
