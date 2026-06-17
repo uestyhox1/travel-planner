@@ -22,7 +22,7 @@
 ```bash
 1. 下载整个 dist/ 文件夹
 2. 双击 TravelPlanner.exe → 原生桌面窗口打开
-3. 登录（默认管理员账户: admin / admin）
+3. 注册并登录
 4. 上传攻略图片，OCR 开箱即用
 ```
 
